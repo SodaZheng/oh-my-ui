@@ -1,0 +1,1 @@
+{"id":"CR-DEMO-001","baseRevision":1,"type":"hypothesis","summary":"演示更正记录的存放位置，不改变任何正式知识。","targets":["S-005"],"impactIds":["S-001","P-003"],"conflicts":[],"decision":"rejected","reason":"仅用于展示结构，不应提交为真实规则。","recordedAt":"2026-08-16T00:00:00.000Z"}

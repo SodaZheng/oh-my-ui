@@ -1,0 +1,9 @@
+{
+  "name": "oh-my-ui",
+  "version": "0.2.0",
+  "description": "从前端源码提炼组件能力、场景配方和详细页面蓝图",
+  "author": {
+    "name": "oh-my-ui"
+  },
+  "license": "MIT"
+}

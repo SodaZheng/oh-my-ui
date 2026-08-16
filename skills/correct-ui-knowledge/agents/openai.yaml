@@ -1,0 +1,4 @@
+interface:
+  display_name: "更正 UI 知识库"
+  short_description: "预览影响和冲突，并在确认后受控更新 UI 设计知识"
+  default_prompt: "Use $correct-ui-knowledge to review this correction, check conflicts, and update the UI knowledge base after confirmation."

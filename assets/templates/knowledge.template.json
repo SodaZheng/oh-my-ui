@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.1.0",
+  "revision": 1,
+  "project": {
+    "name": "待识别项目",
+    "mode": "source-scan",
+    "language": "zh-CN",
+    "disclaimer": "本知识库正在从项目证据中提炼；候选内容不等于已确认设计规范。",
+    "profile": {},
+    "unknowns": [],
+    "createdAt": null,
+    "updatedAt": null
+  },
+  "contextPolicy": {
+    "targetWindow": 256000,
+    "workingSetSoftLimit": 160000,
+    "reserveRatio": 0.3,
+    "retrievalOrder": [
+      "导航与摘要",
+      "候选场景",
+      "相关页面蓝图",
+      "组件规范",
+      "按需证据"
+    ]
+  },
+  "scanState": {
+    "status": "initialized",
+    "routeLedger": [],
+    "componentLedger": [],
+    "coverage": {
+      "total": 0,
+      "complete": 0,
+      "needsRuntime": 0,
+      "excluded": 0,
+      "uncovered": 0
+    },
+    "componentCoverage": {
+      "total": 0,
+      "complete": 0,
+      "needsRuntime": 0,
+      "excluded": 0,
+      "uncovered": 0
+    },
+    "blindSpots": []
+  },
+  "categories": [],
+  "generalRules": [],
+  "components": [],
+  "pageArchetypes": [],
+  "scenarios": [],
+  "pages": [],
+  "modules": [],
+  "pending": []
+}

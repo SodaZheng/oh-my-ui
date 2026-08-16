@@ -1,0 +1,23 @@
+{
+  "name": "oh-my-ui",
+  "version": "0.2.0+codex.20260817020258",
+  "description": "从前端源码提炼组件能力、场景配方和详细页面蓝图",
+  "author": {
+    "name": "oh-my-ui"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "oh-my-ui",
+    "shortDescription": "从源码沉淀组件、场景和页面蓝图",
+    "longDescription": "同时扫描真实页面和组件调用，生成中文组件使用规范、场景搭配配方与从页面全景到组件实例的详细蓝图；PRD 查询使用同一架构组合 UI。",
+    "developerName": "oh-my-ui",
+    "category": "Productivity",
+    "capabilities": [
+      "扫描建库",
+      "PRD 查询",
+      "受控更正"
+    ],
+    "defaultPrompt": "扫描当前前端项目，生成面向设计师的中文 UI 设计知识库。"
+  }
+}
