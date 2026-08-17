@@ -2,11 +2,11 @@
 
 # oh-my-ui
 
-**Turn frontend business code into a designer-facing UI knowledge base.**
+**Let multiple frontend projects continuously enrich one designer-facing UI knowledge base.**
 
 English · [中文](README.md)
 
-![Version](https://img.shields.io/badge/version-0.2.0-7C3AED)
+![Version](https://img.shields.io/badge/version-0.3.0-7C3AED)
 ![License](https://img.shields.io/badge/license-MIT-2563EB)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-D97706)
 ![Codex](https://img.shields.io/badge/Codex-plugin-059669)
@@ -15,7 +15,7 @@ English · [中文](README.md)
 
 ## Overview
 
-`oh-my-ui` is a plugin for both Claude Code and Codex. It studies an existing frontend project—its page entries, layout chains, real component usage, task states, permissions, and user flows—and turns that implementation history into a queryable, traceable, and safely correctable UI design knowledge base.
+`oh-my-ui` is a plugin for both Claude Code and Codex. It studies project A, then B, then C—their page entries, layout chains, real component usage, task states, permissions, and user flows—and incrementally merges their evidence into one queryable, traceable, and safely correctable UI design knowledge base.
 
 The designer-facing output does not expose engineering component names, props, source paths, framework terminology, or code. Instead, it answers questions such as:
 
@@ -28,13 +28,13 @@ The designer-facing output does not expose engineering component names, props, s
 - Which conclusions are observations, candidate patterns, confirmed rules, or unresolved questions?
 
 > [!IMPORTANT]
-> Historical code proves that an implementation existed. It does not prove that the implementation should become a design standard. `oh-my-ui` preserves evidence, confidence, conflicts, and unresolved decisions.
+> Historical code proves that an implementation existed in a particular source project. Even repetition across projects increases only evidence breadth; it does not automatically create a design standard.
 
 ## Core capabilities
 
 | Capability | What it does | Writes to the knowledge base |
 |---|---|---|
-| Build | Builds route/page and component ledgers, then derives component capabilities, scenario recipes, and detailed page blueprints | Yes |
+| Build | Lets multiple source projects contribute component observations, shared scenarios, and source-bound page instances | Yes |
 | Query | Matches task scenarios, selects components through scenario recipes, and outputs a top-down UI blueprint | No, read-only |
 | Correct | Converts natural-language feedback into a structured proposal, checks related knowledge for conflicts, and commits only after confirmation | After confirmation |
 
@@ -48,17 +48,15 @@ The three workflow skills are:
 
 ```mermaid
 flowchart LR
-    A[Frontend project] --> B[Project profile]
-    B --> C[Route ledger]
-    C --> D[Route × Layout × State × Role × Entry]
-    D --> E[Evidence and confidence]
-    E --> F[Task-scenario knowledge]
-    F --> G[Designer-facing Chinese view]
-    F --> H[PRD queries]
-    I[Natural-language correction] --> J[Impact and conflict analysis]
-    J --> K{User confirms}
-    K -->|Yes| F
-    K -->|Revise or cancel| I
+    A[Project A] --> D[Source-bound observations and page instances]
+    B[Project B] --> D
+    C[Project C] --> D
+    D --> E[Semantic matching and conflict analysis]
+    E --> F[Shared component capabilities]
+    E --> G[Shared scenario recipes and scoped variants]
+    F --> H[Designer-facing Chinese view]
+    G --> H
+    G --> I[PRD UI description]
 ```
 
 A route is the starting point, not the complete page model. The same route may render different task structures under different layouts, business states, roles, permissions, or entry paths. Dialogs, side panels, and task stages without their own route are traced from their real trigger points.
@@ -68,18 +66,18 @@ A route is the starting point, not the complete page model. The same route may r
 Generated knowledge is split into a human-facing layer and an internal Agent layer:
 
 ```text
-target-frontend-project/
+shared-knowledge-root/
 └── doc/ui/
     ├── UI设计知识库/             # Read by designers, product, and business teams
     │   ├── 00-知识库导航.md
     │   ├── 01-通用设计规则.md
-    │   ├── 页面/                  # Page blueprints, from shell to component instances
-    │   ├── 场景/                  # Generated from real tasks in the target project
+    │   ├── 场景/                  # Reusable cross-project scenario knowledge
     │   │   └── <discovered-scenario-group>.md
     │   ├── 组件/                  # Designer-facing component usage rules
     │   ├── 02-页面形态索引.md
-    │   ├── 03-业务模块索引.md
+    │   ├── 03-来源项目索引.md
     │   ├── 04-组件使用规范索引.md
+    │   ├── 05-项目案例索引.md
     │   └── 99-待确认事项.md
     └── .ui-knowledge/             # Internal source of truth for the Agent
         ├── knowledge.json
@@ -87,11 +85,11 @@ target-frontend-project/
         └── changes.jsonl
 ```
 
-The knowledge model has three layers: components explain when to use a capability, scenarios explain why those capabilities are combined, and page blueprints explain what the resulting page looks like from macro structure to individual instances. Page archetypes and business modules remain secondary indexes.
+Reusable knowledge has two layers: components explain when to use a capability, while scenarios explain why capabilities are combined and include the recommended page form and layout skeleton. Real pages remain in the hidden source of truth as `pageInstances`; they provide source-bound examples, variants, and counter-evidence without creating a parallel page-rule layer.
 
-Initialization creates only an empty schema and scan ledgers. It does not seed scenarios or scenario groups. Components, scenarios, groups, page archetypes, and page blueprints are generated only after reading the target project. The six groups in the demo are synthetic examples, not a built-in taxonomy.
+Initialization creates an empty multi-project schema. It does not seed source projects, scenarios, components, or page instances. The six groups in the demo are synthetic examples, not a built-in taxonomy.
 
-All scripts still receive the target project root and resolve the knowledge base under `doc/ui/`. Legacy root-level `UI设计知识库/` and `.ui-knowledge/` paths are no longer read; initialization stops if it detects them, preventing two competing sources of truth.
+Scanning uses two roots: `sourceRoot` is the project currently being read, and `knowledgeRoot` is the shared, cumulative knowledge base. All deterministic scripts receive `knowledgeRoot`. Schema 1.1.0 knowledge bases can be migrated safely to 2.0.0.
 
 ## Quick start
 
@@ -159,7 +157,7 @@ Use $plugin-creator to add /absolute/path/to/oh-my-ui to my personal marketplace
 Restart the desktop app and install `oh-my-ui` from the local source. You can then invoke its workflows explicitly:
 
 ```text
-Use $build-ui-knowledge to scan this frontend project and build a Chinese UI design knowledge base.
+Use $build-ui-knowledge to scan this frontend project and merge it into /path/to/shared-ui-knowledge.
 Use $query-ui-knowledge to infer the page structure and scenario composition for this PRD.
 Use $correct-ui-knowledge to check whether this correction conflicts with existing scenarios.
 ```
@@ -168,19 +166,33 @@ See the [OpenAI plugin documentation](https://developers.openai.com/plugins/buil
 
 ## Recommended workflow
 
-### 1. Start with a golden sample
+### 1. Initialize the shared knowledge base
+
+```bash
+mkdir -p /path/to/shared-ui-knowledge
+node scripts/init-kb.mjs /path/to/shared-ui-knowledge --name "Team UI knowledge base"
+```
+
+Migrate a legacy project-scoped knowledge base before adding more sources:
+
+```bash
+node scripts/migrate-kb.mjs /path/to/old-knowledge --source-root /path/to/project-a
+```
+
+### 2. Start with a golden sample
 
 Choose one representative business module containing a collection view, object details, editing, and meaningful state changes. Validate:
 
 - Whether scenario names match the team's business language.
-- Whether page structure is reconstructed accurately.
+- Whether scenario page forms and layout skeletons are reconstructed accurately.
+- Whether detailed real-page structures remain source-bound internal instances rather than parallel rules.
 - Whether role, permission, and exception states are covered.
 - Whether engineering terminology is filtered from designer output.
 - Whether implementation observations remain separate from confirmed standards.
 
-Expand to the full project only after the sample is accepted.
+Expand to the full project and additional source projects only after the sample is accepted.
 
-### 2. Build the knowledge base
+### 3. Let projects A and B contribute incrementally
 
 The unit of analysis is not a source file. It is:
 
@@ -188,13 +200,13 @@ The unit of analysis is not a source file. It is:
 Route × Layout chain × Task state × Role/permission × Entry path
 ```
 
-The Agent first builds a project profile and route ledger. It then follows direct dependencies, state branches, overlays, and downstream task entries one scan unit at a time.
+The Agent maintains a separate profile and scan ledger for every source project. It follows direct dependencies, state branches, overlays, and downstream task entries one scan unit at a time, saving each complete real page as an internal source-bound instance.
 
-It also builds a component ledger from real call sites, surrounding copy, placement, composition, states, styles, and responsive behavior. A component definition alone is not treated as a design rule.
+It then matches component observations and scenario semantics against the shared library. Equivalent semantics append evidence; stable conditional differences become variants; same-condition conflicts remain unresolved; materially different tasks create new scenarios.
 
-### 3. Query with a PRD
+### 4. Query with a PRD
 
-The query workflow extracts user goal, object scope, task stage, duration, risk, result mode, permissions, and exception states. It selects a primary scenario, adds supporting scenarios, resolves their required/conditional/avoided component recipes, and then generates a UI description from page overview down to component instances.
+The query workflow extracts user goal, object scope, task stage, duration, risk, result mode, permissions, and exception states. It selects a primary scenario, adds supporting scenarios, resolves component recipes, and optionally reads one to three page instances from different source projects before generating a new UI description.
 
 Example:
 
@@ -204,7 +216,7 @@ An operator needs to filter a set of pending objects, submit a batch job, return
 
 The expected answer combines search and result browsing, batch and asynchronous processing, and failure recovery. It does not return an implementation component name.
 
-### 4. Correct knowledge naturally and safely
+### 5. Correct knowledge naturally and safely
 
 ```text
 This review task should not happen inside the current page. It contains too much context and is high risk, so it should use a dedicated task space.
@@ -214,8 +226,8 @@ The plugin does not overwrite knowledge immediately. It first previews:
 
 - Correction type and target knowledge.
 - Current and proposed content.
-- Related scenarios and indexes that may be affected.
-- Conflicts with general rules, page archetypes, and exceptions.
+- Source projects, scenarios, variants, page instances, and indexes that may be affected.
+- Conflicts with general rules, scenario page forms, variants, and exceptions.
 - Expected revision change.
 
 Semantic changes are committed only after explicit confirmation, with a new revision and an append-only change record.
@@ -224,13 +236,13 @@ Semantic changes are committed only after explicit confirmation, with a new revi
 
 `oh-my-ui` does not depend on loading an entire repository at once. It uses progressive working sets:
 
-1. Project index.
-2. One route summary.
-3. Direct dependencies.
-4. Required state branches.
-5. Evidence on demand.
+1. Lightweight shared-library index.
+2. Current source-project profile.
+3. One route summary and direct dependencies.
+4. Related scenario candidates.
+5. Page instances and evidence on demand.
 
-Only one route task chain stays active at a time, and conclusions are checkpointed to disk before moving on. The workflow uses roughly 160k tokens as a soft working limit and reserves at least 30% for aggregation, conflict analysis, and final generation.
+Only one route task chain from one source project stays active at a time, and conclusions are checkpointed before moving on. The workflow uses roughly 160k tokens as a soft working limit and reserves at least 30% for cross-project merging, conflict analysis, and final generation.
 
 ## Knowledge governance
 
@@ -242,7 +254,7 @@ Only one route task chain stays active at a time, and conclusions are checkpoint
 | `exception` | A scoped override that applies only under stated conditions |
 | `hypothesis` | An idea awaiting validation and excluded from strong inference |
 
-Confidence uses `low`, `medium`, and `high`. Status and confidence are independent: strong implementation evidence does not automatically create a standard, while a confirmed rule may still require broader validation.
+Confidence uses `low`, `medium`, and `high`. Status and confidence are independent: strong evidence or repetition across projects does not automatically create a standard, while a confirmed rule may still require broader validation.
 
 ## Deterministic tools
 
@@ -250,11 +262,13 @@ Scripts perform auditable mechanical work. They do not infer page semantics:
 
 | Command | Purpose |
 |---|---|
-| `node scripts/init-kb.mjs <project-root>` | Safely initialize an empty knowledge base; refuses overwrite by default |
-| `node scripts/render-kb.mjs <project-root>` | Regenerate designer views from the hidden source of truth |
-| `node scripts/validate-kb.mjs <project-root>` | Validate structure, references, coverage totals, and engineering-term leakage |
-| `node scripts/commit-kb.mjs <project-root> <candidate> <change-record>` | Validate versions and atomically commit a confirmed correction |
-| `node scripts/self-test.mjs` | Test initialization, rendering, commit, and stale-revision rejection |
+| `node scripts/init-kb.mjs <knowledgeRoot>` | Safely initialize an empty multi-project knowledge base |
+| `node scripts/derive-source-key.mjs <sourceRoot> [--id <project-id>]` | Derive a stable non-path source identity and refuse path-only guesses |
+| `node scripts/migrate-kb.mjs <knowledgeRoot> --source-root <legacy-source>` | Migrate schema 1.1.0 page blueprints into schema 2.0.0 internal page instances with a backup |
+| `node scripts/render-kb.mjs <knowledgeRoot>` | Regenerate designer views from the hidden source of truth |
+| `node scripts/validate-kb.mjs <knowledgeRoot>` | Validate source provenance, semantic keys, instance references, coverage totals, and language boundaries |
+| `node scripts/commit-kb.mjs <knowledgeRoot> <candidate> <change-record> [candidate-evidence]` | Atomically commit knowledge, evidence, designer views, and history while rejecting undeclared removals |
+| `node scripts/self-test.mjs` | Test multi-project initialization, migration, rendering, commit, and stale-revision rejection |
 
 ## Local validation
 

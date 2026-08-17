@@ -17,4 +17,4 @@ if (result.errors.some((message) => !message.includes("不存在的证据"))) {
   process.exit(1);
 }
 writeRenderedViews(target, data);
-console.log(`已生成：${path.join(target, VISIBLE_DIR)}`);
+console.log(`已生成统一知识库视图：${path.join(target, VISIBLE_DIR)}`);

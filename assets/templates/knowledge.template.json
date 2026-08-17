@@ -1,13 +1,11 @@
 {
-  "schemaVersion": "1.1.0",
+  "schemaVersion": "2.0.0",
   "revision": 1,
-  "project": {
-    "name": "待识别项目",
-    "mode": "source-scan",
+  "library": {
+    "name": "UI 设计知识库",
+    "mode": "multi-project",
     "language": "zh-CN",
-    "disclaimer": "本知识库正在从项目证据中提炼；候选内容不等于已确认设计规范。",
-    "profile": {},
-    "unknowns": [],
+    "disclaimer": "本知识库由多个项目证据持续补充；跨项目重复只能提高证据广度，不能自动成为正式规范。",
     "createdAt": null,
     "updatedAt": null
   },
@@ -18,37 +16,16 @@
     "retrievalOrder": [
       "导航与摘要",
       "候选场景",
-      "相关页面蓝图",
+      "相关项目页面实例",
       "组件规范",
       "按需证据"
     ]
   },
-  "scanState": {
-    "status": "initialized",
-    "routeLedger": [],
-    "componentLedger": [],
-    "coverage": {
-      "total": 0,
-      "complete": 0,
-      "needsRuntime": 0,
-      "excluded": 0,
-      "uncovered": 0
-    },
-    "componentCoverage": {
-      "total": 0,
-      "complete": 0,
-      "needsRuntime": 0,
-      "excluded": 0,
-      "uncovered": 0
-    },
-    "blindSpots": []
-  },
+  "sourceProjects": [],
   "categories": [],
   "generalRules": [],
   "components": [],
-  "pageArchetypes": [],
   "scenarios": [],
-  "pages": [],
-  "modules": [],
+  "pageInstances": [],
   "pending": []
 }

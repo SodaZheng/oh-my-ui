@@ -1,7 +1,7 @@
 {
   "name": "oh-my-ui",
-  "version": "0.2.0",
-  "description": "从前端源码提炼组件能力、场景配方和详细页面蓝图",
+  "version": "0.3.0",
+  "description": "让多个前端项目持续补充共享组件能力、场景配方和页面实例证据",
   "author": {
     "name": "oh-my-ui"
   },

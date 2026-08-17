@@ -6,6 +6,12 @@ import { INTERNAL_DIR, VISIBLE_DIR, jsonText, readJson, validateRoot, writeRende
 
 const target = path.resolve(process.argv[2] || ".");
 const force = process.argv.includes("--force");
+const nameIndex = process.argv.indexOf("--name");
+if (nameIndex >= 0 && !process.argv[nameIndex + 1]) {
+  console.error("--name 需要一个知识库名称。");
+  process.exit(2);
+}
+const libraryName = nameIndex >= 0 ? process.argv[nameIndex + 1] : `${path.basename(target)} UI 设计知识库`;
 const scriptRoot = path.dirname(fileURLToPath(import.meta.url));
 const templatePath = path.join(scriptRoot, "..", "assets", "templates", "knowledge.template.json");
 const internalRoot = path.join(target, INTERNAL_DIR);
@@ -19,7 +25,7 @@ if (!fs.existsSync(target) || !fs.statSync(target).isDirectory()) {
   process.exit(1);
 }
 if (fs.existsSync(legacyInternalRoot) || fs.existsSync(legacyVisibleRoot)) {
-  console.error("检测到项目根目录中的旧版知识库路径。插件只使用 doc/ui；为避免形成两套事实源，不会自动初始化或读取旧路径，请先确认迁移到 doc/ui。");
+  console.error("检测到知识库根目录中的旧版路径。插件只使用 doc/ui；为避免形成两套事实源，不会自动初始化或读取旧路径，请先确认迁移到 doc/ui。");
   process.exit(3);
 }
 if (!force && (fs.existsSync(knowledgePath) || fs.existsSync(visibleRoot))) {
@@ -29,9 +35,9 @@ if (!force && (fs.existsSync(knowledgePath) || fs.existsSync(visibleRoot))) {
 
 const data = readJson(templatePath);
 const now = new Date().toISOString();
-data.project.name = path.basename(target);
-data.project.createdAt = now;
-data.project.updatedAt = now;
+data.library.name = libraryName;
+data.library.createdAt = now;
+data.library.updatedAt = now;
 
 fs.mkdirSync(internalRoot, { recursive: true });
 fs.writeFileSync(knowledgePath, jsonText(data), "utf8");
@@ -44,5 +50,5 @@ if (result.errors.length) {
   console.error(result.errors.join("\n"));
   process.exit(1);
 }
-console.log(`已初始化：${target}`);
+console.log(`已初始化统一知识库：${target}`);
 for (const warning of result.warnings) console.warn(`警告：${warning}`);

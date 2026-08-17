@@ -1,6 +1,6 @@
 {
   "name": "oh-my-ui",
-  "description": "面向 Claude Code 的 oh-my-ui 插件目录，用于从前端项目沉淀中文 UI 设计知识库。",
+  "description": "面向 Claude Code 的 oh-my-ui 插件目录，用于从多个前端项目沉淀共享中文 UI 设计知识库。",
   "owner": {
     "name": "oh-my-ui"
   },
@@ -8,8 +8,8 @@
     {
       "name": "oh-my-ui",
       "source": "./",
-      "description": "从前端源码提炼组件能力、场景配方和详细页面蓝图",
-      "version": "0.2.0",
+      "description": "让多个前端项目持续补充共享组件能力、场景配方和页面实例证据",
+      "version": "0.3.0",
       "author": {
         "name": "oh-my-ui"
       }

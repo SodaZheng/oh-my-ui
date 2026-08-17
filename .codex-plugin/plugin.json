@@ -1,7 +1,7 @@
 {
   "name": "oh-my-ui",
-  "version": "0.2.0+codex.20260817020258",
-  "description": "从前端源码提炼组件能力、场景配方和详细页面蓝图",
+  "version": "0.3.0+codex.20260817105216",
+  "description": "让多个前端项目持续补充共享组件能力、场景配方和页面实例证据",
   "author": {
     "name": "oh-my-ui"
   },
@@ -9,15 +9,15 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "oh-my-ui",
-    "shortDescription": "从源码沉淀组件、场景和页面蓝图",
-    "longDescription": "同时扫描真实页面和组件调用，生成中文组件使用规范、场景搭配配方与从页面全景到组件实例的详细蓝图；PRD 查询使用同一架构组合 UI。",
+    "shortDescription": "跨项目沉淀共享组件、场景与实例证据",
+    "longDescription": "让多个前端项目向同一知识库贡献真实页面与组件观察，按语义归并中文组件能力、场景配方和限定变体；页面仅作为带来源实例证据，PRD 查询据此组合完整 UI。",
     "developerName": "oh-my-ui",
     "category": "Productivity",
     "capabilities": [
-      "扫描建库",
+      "跨项目扫描建库",
       "PRD 查询",
       "受控更正"
     ],
-    "defaultPrompt": "扫描当前前端项目，生成面向设计师的中文 UI 设计知识库。"
+    "defaultPrompt": "扫描当前前端项目，把带来源的观察归并到团队共享 UI 设计知识库。"
   }
 }

@@ -1,4 +1,4 @@
 interface:
-  display_name: "查询 UI 知识库"
-  short_description: "按场景配方为 PRD 生成组件搭配与完整页面蓝图"
-  default_prompt: "Use $query-ui-knowledge to infer the page structure and scenario composition for this PRD."
+  display_name: "查询跨项目 UI 知识库"
+  short_description: "结合共享场景、组件配方与跨项目实例生成完整页面设计描述"
+  default_prompt: "Use $query-ui-knowledge to infer a page from shared scenarios and cross-project evidence."

@@ -1,4 +1,4 @@
 interface:
-  display_name: "更正 UI 知识库"
-  short_description: "预览影响和冲突，并在确认后受控更新 UI 设计知识"
-  default_prompt: "Use $correct-ui-knowledge to review this correction, check conflicts, and update the UI knowledge base after confirmation."
+  display_name: "更正跨项目 UI 知识库"
+  short_description: "检查来源项目、场景归并影响与冲突后受控更新共享知识库"
+  default_prompt: "Use $correct-ui-knowledge to review this correction across source projects and update the shared UI knowledge base after confirmation."

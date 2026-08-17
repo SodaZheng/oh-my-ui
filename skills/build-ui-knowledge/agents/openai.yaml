@@ -1,4 +1,4 @@
 interface:
-  display_name: "扫描前端生成 UI 知识库"
-  short_description: "扫描源码，生成组件规范、场景配方与页面蓝图"
-  default_prompt: "Use $build-ui-knowledge to scan this frontend project and build a Chinese, designer-facing UI knowledge base."
+  display_name: "跨项目构建 UI 知识库"
+  short_description: "扫描多个前端项目，归并共享场景、组件能力与带来源页面实例"
+  default_prompt: "Use $build-ui-knowledge to scan this frontend project and merge its evidence into the shared UI knowledge base."
